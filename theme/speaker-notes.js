@@ -112,7 +112,14 @@
     popOut.classList.add("icon-button", "pop-out");
     popOut.addEventListener("click", (event) => {
       let popup = window.open(popOutLocation.href, "speakerNotes", "popup");
-      if (popup) {
+        if (popup) {
+          // After loading popup page register onbeforeunload event
+          popup.onload = function(){ 
+              this.onbeforeunload = function(){
+                setState("inline-closed");
+                applyState();
+              }
+          }
         setState("popup");
         applyState();
       } else {
